@@ -15,7 +15,7 @@ async def select_setting(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if name == '⏱添加时长':
         text = '请输入发送需要添加的时长，单位：天'
         STATUS = 'addtime'
-    elif name == '🥇昨日排行':
+    elif name == '🥇本周排行':
         text = statDay()
     elif name == '🏆本月排行':
         text = statMonth()
