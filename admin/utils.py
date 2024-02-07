@@ -25,7 +25,7 @@ settings_dict = {
 v2board_dict = {
     '⏱添加时长': 'xx',
     '🚮解绑用户': 'xx',
-    '🥇昨日排行': 'xx',
+    '🥇本周排行': 'xx',
     '🏆本月排行': 'xx',
 }
 
@@ -72,17 +72,32 @@ def statMonth():
 
 def statDay():
     emoji_list = ["1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣", "6️⃣", "7️⃣", "8️⃣", "9️⃣", "🔟"]
-    yesterday = datetime.date.today() - datetime.timedelta(days=1)
-    yesterday_start = datetime.datetime.combine(yesterday, datetime.time.min)
-    timestamp = int(yesterday_start.timestamp())
+    
+    # 获取当前日期和时间
+    current_date = datetime.datetime.now()
+    
+    # 计算本周的第一天和最后一天
+    weekday = current_date.weekday()  # 获取今天是星期几（0代表星期一，6代表星期日）
+    sunday = current_date - datetime.timedelta(days=weekday)  # 计算本周的星期日
+    saturday = sunday + datetime.timedelta(days=6)  # 计算本周的星期六
+    
+    # 设置时间范围为本周
+    sunday_start = datetime.datetime.combine(sunday, datetime.time.min)
+    saturday_end = datetime.datetime.combine(saturday, datetime.time.max)
+    timestamp_start = int(sunday_start.timestamp())
+    timestamp_end = int(saturday_end.timestamp())
+    
+    # 查询本周内的流量数据
     results = (V2StatUser
                .select(V2StatUser, fn.SUM((V2StatUser.u + V2StatUser.d) * V2StatUser.server_rate).alias('total_traffic'))
-               .where(V2StatUser.record_at == timestamp)
+               .where(V2StatUser.record_at.between(timestamp_start, timestamp_end))
                .group_by(V2StatUser.user_id)
                .order_by(SQL('total_traffic DESC'))
                .limit(10)
                )
-    text = f'📊{yesterday}流量前10名\n---------------\n'
+    
+    # 格式化输出文本
+    text = f'📊本周流量前10名\n---------------\n'
     for idx, result in enumerate(results):
         text += f'{emoji_list[idx]}  {result.user_id.email} {convert_bytes(int(result.total_traffic))}\n\n'
     return text
