@@ -60,13 +60,9 @@ cd v2boardbot
 bash install.sh
 ```
 
-安装完成会提示前台运行和后台运行，每次更新或者首次运行先前台运行 `/www/wwwroot/66caihong.com/v2boardbot/python-3.9.7/bin/python3.9 Bot.py`，没问题以后再后台运行
+第一次运行先绑定数据库 `/www/wwwroot/66caihong.com/v2boardbot/python-3.9.7/bin/python3.9 Bot.py`
 
-#### 更新
 
-项目更新以后在你克隆的项目目录里执行`git pull`，如果更新日志中存在本地数据库更新类似的提示，删除本地的bot.db
-
-然后执行`sh install.sh`
 
 #### 高级使用
 
@@ -75,6 +71,12 @@ bash install.sh
 启动命令：/www/wwwroot/66caihong.com/v2boardbot/python-3.9.7/bin/python3.9 Bot.py`
 
 进程目录：/www/wwwroot/66caihong.com/v2boardbot/
+
+#### 更新
+
+项目更新以后在你克隆的项目目录里执行`git pull`，如果更新日志中存在本地数据库更新类似的提示，删除本地的bot.db
+
+然后执行`sh install.sh`
 
 #### 防白痴说明
 
