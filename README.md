@@ -57,7 +57,7 @@ git clone https://github.com/owo10086/v2boardbot.git
 
 ```bash
 cd v2boardbot
-sh insall.sh
+bash install.sh
 ```
 
 安装完成会提示前台运行和后台运行，每次更新或者首次运行先前台运行 `/www/wwwroot/66caihong.com/v2boardbot/python-3.9.7/bin/python3.9 Bot.py`，没问题以后再后台运行
